@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🧠 Feedback Portal</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      resize: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #ff5500;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff7700;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Send Your Feedback</h1>
+  <form id="feedbackForm">
+    <textarea id="feedbackText" placeholder="Type your thoughts here..."></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1423561942361968702/VcaFMmBrk-DY89iC2XMnfY-ea-iqPziIMsaXbAc-JcJHK2qDyC9xTlUvDXhktd5omCYZ";
+
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const feedback = document.getElementById("feedbackText").value.trim();
+
+      if (!feedback) {
+        alert("Please enter some feedback before submitting.");
+        return;
+      }
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: `🧠 New Feedback:\n${feedback}` })
+      })
+      .then(() => {
+        alert("Thanks for your feedback!");
+        document.getElementById("feedbackText").value = "";
+      })
+      .catch(() => {
+        alert("Failed to send feedback. Please try again later.");
+      });
+    });
+  </script>
+</body>
+</html>
